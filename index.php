@@ -7,7 +7,7 @@ if($method == 'POST'){
 	$requestBody = file_get_contents('php://input');
 	$json = json_decode($requestBody);
 
-	$text = $json->result->parameters->text;
+	$text = $json->result->parameters->city;
 
 	switch ($text) {
 		case 'Tokyo':
