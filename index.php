@@ -7,19 +7,19 @@ if($method == 'POST'){
 	$requestBody = file_get_contents('php://input');
 	$json = json_decode($requestBody);
 
-	$geo-city = $json->result->parameters->geo-city;
+	$text = $json->result->parameters->text;
 
-	switch ($geo-city) {
+	switch ($text) {
 		case 'Tokyo':
-			$speech = "Tokyo is fantastic city, let ,e tell you some good places around.";
+			$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there.";
 			break;
 
 		case 'Fukuoka':
-			$speech = "Fukuoka is fantastic city, let ,e tell you some good places around.";
+			$speech = "Fukuoka is a beauiful city, I'll tell you what places to visit there.";
 			break;
 
 		case 'Alexandria':
-			$speech = "Alexandria is fantastic city, let ,e tell you some good places around.";
+			$speech = "Alexandria is a beauiful city, I'll tell you what places to visit there.";
 			break;
 		
 		default:
