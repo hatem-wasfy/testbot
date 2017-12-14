@@ -11,7 +11,9 @@ if($method == 'POST'){
 
 	switch ($text) {
 		case 'Tokyo':
-			$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there. here we go, check this https://www.google.com/maps/search/places+near+Tokyo";
+			//$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there. Here we go, check this https://www.google.com/maps/search/places+near+Tokyo";
+			$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there. Here we go";
+			
 			break;
 
 		case 'Fukuoka':
