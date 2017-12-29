@@ -9,9 +9,9 @@ if($method == 'POST'){
 
 	$text = $json->result->parameters->city;
 ////java script for google maps api/////////////////////////
-	echo "<script type='text/javascript'>
-                alert('JavaScript is awesome!');
-            </script>";
+	//echo "<script type='text/javascript'>
+          //      alert('JavaScript is awesome!');
+            //</script>";
 ///////////////////////////////////////////////////////////
 	
 	switch ($text) {
