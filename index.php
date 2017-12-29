@@ -8,7 +8,12 @@ if($method == 'POST'){
 	$json = json_decode($requestBody);
 
 	$text = $json->result->parameters->city;
-
+////java script for google maps api/////////////////////////
+	echo "<script type='text/javascript'>
+                alert('JavaScript is awesome!');
+            </script>";
+///////////////////////////////////////////////////////////
+	
 	switch ($text) {
 		case 'Tokyo':
 			//$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there. Here we go, check this https://www.google.com/maps/search/places+near+Tokyo";
