@@ -128,8 +128,8 @@ else
 	//////////////////////////////////////////////////////////////////////////////////////
 	var geocoder;
 	var map;
-	//var address = "Tokyo";
-	var address = " <?php echo $text ?> ";
+	var address = "Tokyo";
+	////var address = " <?php echo $text ?> ";
 	var typeinp = ""; //"store";//"restaurant";
 	//hatem check types https://developers.google.com/places/supported_types
 	
