@@ -1,48 +1,234 @@
-<?php 
-
-$method = $_SERVER['REQUEST_METHOD'];
-
-// Process only when method is POST
-if($method == 'POST'){
-	$requestBody = file_get_contents('php://input');
-	$json = json_decode($requestBody);
-
-	$text = $json->result->parameters->city;
-////java script for google maps api/////////////////////////
-	//echo "<script type='text/javascript'>
-          //      alert('JavaScript is awesome!');
-            //</script>";
-///////////////////////////////////////////////////////////
-	
-	switch ($text) {
-		case 'Tokyo':
-			//$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there. Here we go, check this https://www.google.com/maps/search/places+near+Tokyo";
-			$speech = "Tokyo is a beauiful city, I'll tell you what places to visit there. Here we go";
-			
-			break;
-
-		case 'Fukuoka':
-			$speech = "Fukuoka is a beauiful city, I'll tell you what places to visit there.";
-			break;
-
-		case 'Alexandria':
-			$speech = "Alexandria is a beauiful city, I'll tell you what places to visit there.";
-			break;
-		
-		default:
-			$speech = "Sorry, I didnt get that. Please ask me something else.";
-			break;
-	}
-
-	$response = new \stdClass();
-	$response->speech = $speech;
-	$response->displayText = $speech;
-	$response->source = "webhook";
-	echo json_encode($response);
-}
-else
-{
-	echo "Method not allowed";
-}
-
+<? php
+echo '<!DOCTYPE html>';
+echo '<html>';
+echo '<head>';
+echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no">';
+echo '<meta charset="utf-8">';
+echo '<title>Place search pagination</title>';
+echo '<style>';
+echo '/* Always set the map height explicitly to define the size of the div';
+echo '* element that contains the map. */';
+echo '#map {';
+echo 'height: 100%;';
+echo '}';
+echo '/* Optional: Makes the sample page fill the window. */';
+echo 'html, body {';
+echo 'height: 100%;';
+echo 'margin: 0;';
+echo 'padding: 0;';
+echo '}';
+echo '#right-panel {';
+echo 'font-family: 'Roboto','sans-serif';';
+echo 'line-height: 30px;';
+echo 'padding-left: 10px;';
+echo '}';
+echo '';
+echo '#right-panel select, #right-panel input {';
+echo 'font-size: 15px;';
+echo '}';
+echo '';
+echo '#right-panel select {';
+echo 'width: 100%;';
+echo '}';
+echo '';
+echo '#right-panel i {';
+echo 'font-size: 12px;';
+echo '}';
+echo '#right-panel {';
+echo 'font-family: Arial, Helvetica, sans-serif;';
+echo 'position: absolute;';
+echo 'right: 5px;';
+echo 'top: 60%;';
+echo 'margin-top: -195px;';
+echo 'height: 330px;';
+echo 'width: 200px;';
+echo 'padding: 5px;';
+echo 'z-index: 5;';
+echo 'border: 1px solid #999;';
+echo 'background: #fff;';
+echo '}';
+echo 'h2 {';
+echo 'font-size: 22px;';
+echo 'margin: 0 0 5px 0;';
+echo '}';
+echo 'ul {';
+echo 'list-style-type: none;';
+echo 'padding: 0;';
+echo 'margin: 0;';
+echo 'height: 271px;';
+echo 'width: 200px;';
+echo 'overflow-y: scroll;';
+echo '}';
+echo 'li {';
+echo 'background-color: #f1f1f1;';
+echo 'padding: 10px;';
+echo 'text-overflow: ellipsis;';
+echo 'white-space: nowrap;';
+echo 'overflow: hidden;';
+echo '}';
+echo 'li:nth-child(odd) {';
+echo 'background-color: #fcfcfc;';
+echo '}';
+echo '#more {';
+echo 'width: 100%;';
+echo 'margin: 5px 0 0 0;';
+echo '}';
+echo '</style>';
+echo '<script>';
+echo '//////////////////////////////////////////////////////////////////////////////////////';
+echo 'var geocoder;';
+echo 'var map;';
+echo 'var address = "Tokyo";';
+echo 'var typeinp = ""; //"store";//"restaurant";';
+echo '//hatem check types https://developers.google.com/places/supported_types';
+echo '';
+echo '';
+echo 'function initialize() {';
+echo 'geocoder = new google.maps.Geocoder();';
+echo 'var latlng = new google.maps.LatLng(-34.397, 150.644);';
+echo 'var mapOptions = {';
+echo 'zoom: 8,';
+echo 'center: latlng';
+echo '}';
+echo 'map = new google.maps.Map(document.getElementById('map'), mapOptions);';
+echo '// hatem ;)';
+echo 'codeAddress();';
+echo '//';
+echo '';
+echo '//';
+echo 'geocoder.geocode( { 'address': address}, function(results, status) {';
+echo 'pyrmont = results[0].geometry.location;';
+echo '///alert('pyrmont inside geco is now: ' + pyrmont);';
+echo '//';
+echo 'initMap();';
+echo '//';
+echo '});';
+echo '';
+echo '//';
+echo '//alert('geocoder is now: ' + geocoder);';
+echo '///alert('pyrmont is now: ' + pyrmont);';
+echo '//alert('px is now: ' + px);';
+echo '';
+echo '//alert('latlng is now: ' + latlng);';
+echo '';
+echo '';
+echo '';
+echo '}';
+echo '';
+echo '';
+echo '';
+echo '';
+echo 'function codeAddress() {';
+echo '//var address = document.getElementById('address').value;';
+echo '// hatem, here i put city name';
+echo '//var address = "Tokyo";';
+echo '';
+echo 'geocoder.geocode( { 'address': address}, function(results, status) {';
+echo 'if (status == 'OK') {';
+echo '';
+echo '//';
+echo 'pyrmont = results[0].geometry.location;';
+echo '//';
+echo '///alert('pyrmont inside codeAddress function is now: ' + pyrmont);';
+echo '';
+echo 'map.setCenter(results[0].geometry.location);';
+echo 'var marker = new google.maps.Marker({';
+echo 'map: map,';
+echo 'position: results[0].geometry.location';
+echo '});';
+echo '} else {';
+echo 'alert('Geocode was not successful for the following reason: ' + status);';
+echo '}';
+echo '});';
+echo '}';
+echo '';
+echo '';
+echo '';
+echo '';
+echo '';
+echo '';
+echo '/////////////////////////////////////////////////////////////////////////////////////';
+echo '';
+echo '';
+echo '';
+echo '';
+echo '// This example requires the Places library. Include the libraries=places';
+echo '// parameter when you first load the API. For example:';
+echo '// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">';
+echo '';
+echo '//var map;';
+echo '';
+echo 'function initMap() {';
+echo '//var pyrmont = {lat: -33.866, lng: 151.196};';
+echo '';
+echo 'map = new google.maps.Map(document.getElementById('map'), {';
+echo 'center: pyrmont,';
+echo 'zoom: 17';
+echo '});';
+echo '';
+echo 'var service = new google.maps.places.PlacesService(map);';
+echo 'service.nearbySearch({';
+echo 'location: pyrmont,';
+echo 'radius: 500,';
+echo 'type: typeinp //'restaurant' //type: ['store']';
+echo '}, processResults);';
+echo '}';
+echo '';
+echo 'function processResults(results, status, pagination) {';
+echo 'if (status !== google.maps.places.PlacesServiceStatus.OK) {';
+echo 'return;';
+echo '} else {';
+echo 'createMarkers(results);';
+echo '';
+echo 'if (pagination.hasNextPage) {';
+echo 'var moreButton = document.getElementById('more');';
+echo '';
+echo 'moreButton.disabled = false;';
+echo '';
+echo 'moreButton.addEventListener('click', function() {';
+echo 'moreButton.disabled = true;';
+echo 'pagination.nextPage();';
+echo '});';
+echo '}';
+echo '}';
+echo '}';
+echo '';
+echo 'function createMarkers(places) {';
+echo 'var bounds = new google.maps.LatLngBounds();';
+echo 'var placesList = document.getElementById('places');';
+echo '';
+echo 'for (var i = 0, place; place = places[i]; i++) {';
+echo 'var image = {';
+echo 'url: place.icon,';
+echo 'size: new google.maps.Size(71, 71),';
+echo 'origin: new google.maps.Point(0, 0),';
+echo 'anchor: new google.maps.Point(17, 34),';
+echo 'scaledSize: new google.maps.Size(25, 25)';
+echo '};';
+echo '';
+echo 'var marker = new google.maps.Marker({';
+echo 'map: map,';
+echo 'icon: image,';
+echo 'title: place.name,';
+echo 'position: place.geometry.location';
+echo '});';
+echo '';
+echo 'placesList.innerHTML += '<li>' + place.name + '</li>';';
+echo '';
+echo 'bounds.extend(place.geometry.location);';
+echo '}';
+echo 'map.fitBounds(bounds);';
+echo '}';
+echo '</script>';
+echo '</head>';
+echo '<body onload="initialize()">';
+echo '<div id="map"></div>';
+echo '<div id="right-panel">';
+echo '<h2>Results</h2>';
+echo '<ul id="places"></ul>';
+echo '<button id="more">More results</button>';
+echo '</div>';
+echo '<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADsZZiGIWF2laJkl5qNE5EUkSXkye4HG4&libraries=places&callback=initMap" async defer></script>';
+echo '</body>';
+echo '</html>';
 ?>
